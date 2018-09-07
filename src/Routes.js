@@ -25,6 +25,18 @@ export default ({ childProps }) => (
       component={Signup}
       props={childProps}
     />
+    <UnauthenticatedRoute
+      path="/site/allpublicnotes"
+      exact
+      component={Home}
+      props={childProps}
+    />
+    <AuthenticatedRoute
+      path="/site/allnotes"
+      exact
+      component={Home}
+      props={childProps}
+    />
     <AuthenticatedRoute
       path="/site/new"
       exact
