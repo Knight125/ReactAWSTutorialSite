@@ -43,7 +43,7 @@ export default class Home extends Component {
         i !== 0 ? (
           <ListGroupItem
             key={note.uploadId}
-            href={`/site/${note.uploadId}`}
+            href={`/site/allnotes/${note.uploadId}`}
             onClick={this.handleNoteClick}
             header={note.content.trim().split("\n")[0]}
           >

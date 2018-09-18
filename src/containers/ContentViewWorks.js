@@ -5,8 +5,7 @@ import {
   ListGroup,
   ListGroupItem,
   FormGroup,
-  FormControl,
-  Label
+  FormControl
 } from "react-bootstrap";
 import "./Home.css";
 
@@ -45,18 +44,28 @@ export default class ContentView extends Component {
   };
 
   renderNotesList(notes) {
-    return [{}].concat(notes).map((note, i) => {
-      if (i !== 0) {
-        if (this.props.match.params.id === note.uploadId) {
-          return (
-            <Label key={i}>
-              {/** need unique key prop else warning **/}
-              {note.content}
-            </Label>
-          );
-        }
-      }
-    });
+    return [{}].concat(notes).map(
+      (note, i) =>
+        i !== 0 ? (
+          <FormGroup controlId="content">
+            <FormControl
+              value={note.content.trim().split("\n")[0]}
+              componentClass="textarea"
+              readOnly
+            />
+          </FormGroup>
+        ) : (
+          <ListGroupItem
+            key="new"
+            href="/site/new"
+            onClick={this.handleNoteClick}
+          >
+            <h4>
+              <b>{"\uFF0B"}</b> Create a new note
+            </h4>
+          </ListGroupItem>
+        )
+    );
   }
 
   renderLander() {

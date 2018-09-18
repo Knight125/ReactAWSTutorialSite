@@ -8,6 +8,8 @@ import AppliedRoute from "./components/AppliedRoute";
 import Signup from "./containers/Signup";
 import NewNote from "./containers/NewNote";
 import Notes from "./containers/Notes";
+import ContentView from "./containers/ContentView";
+import ContentView2 from "./containers/ContentView";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
@@ -48,6 +50,12 @@ export default ({ childProps }) => (
       path="/site/:id"
       exact
       component={Notes}
+      props={childProps}
+    />
+    <AuthenticatedRoute
+      path="/site/allnotes/:id"
+      exact
+      component={ContentView2}
       props={childProps}
     />
 
