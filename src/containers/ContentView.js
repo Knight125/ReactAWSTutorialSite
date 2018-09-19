@@ -6,7 +6,8 @@ import {
   ListGroupItem,
   FormGroup,
   FormControl,
-  Label
+  Label,
+  ControlLabel
 } from "react-bootstrap";
 import "./Home.css";
 
@@ -44,19 +45,49 @@ export default class ContentView extends Component {
     this.props.history.push(event.currentTarget.getAttribute("href"));
   };
 
+  async getAttachment(note) {
+    try {
+      var attachmentURL = await Storage.vault.get(note.attachment);
+      return attachmentURL;
+    } catch (e) {}
+  }
+
   renderNotesList(notes) {
     return [{}].concat(notes).map((note, i) => {
       if (i !== 0) {
         if (this.props.match.params.id === note.uploadId) {
+          if (note.attachment) {
+            var attachmentURL = this.getAttachment(note);
+          } else {
+            var attachmentURL = null;
+          }
           return (
-            <Label key={i}>
-              {/** need unique key prop else warning **/}
-              {note.content}
-            </Label>
+            <div>
+              <Label key={i}>
+                {/** need unique key prop else warning **/}
+                {note.content}
+              </Label>
+              <FormGroup>
+                <ControlLabel>Attachment</ControlLabel>
+                <FormControl.Static>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={attachmentURL}
+                  >
+                    {this.formatFilename(note.attachment)}
+                  </a>
+                </FormControl.Static>
+              </FormGroup>
+            </div>
           );
         }
       }
     });
+  }
+
+  formatFilename(str) {
+    return str.replace(/^\w+-/, "");
   }
 
   renderLander() {
